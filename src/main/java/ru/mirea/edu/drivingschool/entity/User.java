@@ -3,6 +3,7 @@ package ru.mirea.edu.drivingschool.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
@@ -37,8 +38,10 @@ public class User implements UserDetails {
     private String patronymic;
     @ManyToMany
     private List<Lesson> lessons = new ArrayList<>();
-    @OneToMany(mappedBy = "student")
-    private List<DrivingLesson> drivingLessons;
+    @OneToMany(mappedBy = "student", fetch = FetchType.EAGER)
+    private List<DrivingLesson> drivingLessons = new ArrayList<>();
+    @OneToMany(mappedBy = "teacher", fetch = FetchType.EAGER)
+    private List<DrivingLesson> drivingLessonsTeacher = new ArrayList<>();
     @Enumerated(EnumType.STRING)
     private Role role;
 
