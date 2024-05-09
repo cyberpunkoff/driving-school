@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,5 +43,10 @@ public class TeacherController {
     ) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         lessonService.createLesson(createLessonRequest, teacher);
+    }
+
+    @DeleteMapping("/lesson/{id}")
+    public void deleteLesson(@PathVariable Integer id) {
+        lessonService.deleteLesson(id);
     }
 }

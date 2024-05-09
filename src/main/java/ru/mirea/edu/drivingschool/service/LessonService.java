@@ -38,6 +38,15 @@ public class LessonService {
             .build();
     }
 
+    public static LessonDto mapLessonToLessonDto(Lesson lesson) {
+        return LessonDto.builder()
+            .id(lesson.getId())
+            .date(lesson.getTime())
+            .theme(lesson.getTheme())
+            .teacher(mapUserToTeacher(lesson.getTeacher()))
+            .build();
+    }
+
     public static StudentDto mapUserToStudent(User user) {
         return StudentDto.builder()
             .name(user.getFirstName())
@@ -67,5 +76,15 @@ public class LessonService {
             .build();
 
         lessonRepository.save(lesson);
+    }
+
+    public void deleteLesson(Integer id) {
+        lessonRepository.deleteById(id);
+    }
+
+    public List<LessonDto> getStudentLessons(User student) {
+        return lessonRepository.findLessonsByStudentId(student.getId()).stream()
+            .map(LessonService::mapLessonToLessonDto)
+            .toList();
     }
 }
